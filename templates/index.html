@@ -20,11 +20,11 @@
 		/*EXPERIMENT WITH DIFFERENT STYLING FOR THE CIRCLES AND WHAT HAPPENS WHEN THE MOUSE HOVERS OVER THEM*/
 		circle {
 			fill-opacity: .3;
-			fill: red;
+			fill: green;
 			stroke-width: 0px;
 		}
 		circle:hover {
-		  	stroke: black;
+		  	stroke: red;
 		  	stroke-width: 2px;
 		  	cursor: crosshair;
 		}
@@ -32,7 +32,7 @@
 		/*EXPERIMENT WITH YOUR OWN STYLING RULES TO CHANGE THE APPEARANCE OF THE TOOLTIP, THE MENU, AND THE MESSAGE TEXT*/
 		div.tooltip{
 			padding: 6px;
-			background: white;
+			/*background: gray;*/
 			visibility: hidden;
 			position: absolute;
 			z-index: 10;
@@ -50,7 +50,7 @@
 			right: 0px;
 			width: 250px;
 			height: 500px;
-			background: rgba(255,255,255,.8);
+			background: rgba(0,255,255,.8);
 		}
 
 		em{
@@ -68,14 +68,17 @@
 
 	<!-- CHANGE THE STRUCTURE OF THE TOOLTIP TO DISPLAY THE LATITUDE AND LONGITUDE OF EACH POINT. ALSO, YOU COULD TRY TO DISPLAY ANOTHER PIECE OF DATA ABOUT THE POINT, BUT REMEMBER YOU FIRST NEED TO MAKE SURE TO SEND THIS DATA BACK FROM THE SERVER -->
 	<div class="tooltip">
-		<p class="tooltip-text" id="title">This is the title</p>
-		<p class="tooltip-text" id="price">This is the price</p>
+		<p class="tooltip-text" id="title"></p>
+		<p class="tooltip-text" id="price"></p>
+		<p class="tooltip-text" id="lat"></p>
+		<p class="tooltip-text" id="lng"></p>
 	</div>
 
 	<!-- EXPERIMENT WITH OTHER FORM ELEMENTS, AND ADD SOME TEXT TO THE MENU TO EXPLAIN WHAT IS HAPPENING ON THE SITE -->
 	<div class="menu">
 		<p><h4>DMC Web Stack</h4></p>
 		<form>
+			<p><input id="textbox" type="text">Do whatever you want</p>
 			<p><input id="heatmap" type="checkbox">Heat Map</p>
 			<p><input type="button" value="Update Data" onclick="updateData()"></p>
 			<p>Status: <em id="message"></em></p>
@@ -96,6 +99,8 @@
 		// DON'T FORGET TO CHANGE THIS CODE DEPENDING ON THE DATA YOU'RE DISPLAYING IN YOUR TOOLTIP
 		var tooltip = d3.select("div.tooltip");
 		var tooltip_title = d3.select("#title");
+		var tooltip_lat = d3.select("#lat");
+		var tooltip_lng = d3.select("#lng");
 		var tooltip_price = d3.select("#price");
 
 
@@ -109,11 +114,11 @@
 
 		//uncomment for Mapbox implementation, and supply your own access token
 
-		// L.tileLayer('https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={accessToken}', {
-		// 	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-		// 	mapid: 'mapbox.light',
-		// 	accessToken: [INSERT YOUR TOKEN HERE!]
-		// }).addTo(map);
+		 /*L.tileLayer('https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={accessToken}', {
+		 	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		 	mapid: 'mapbox.light',
+		 	accessToken: [INSERT YOUR TOKEN HERE!]
+		 }).addTo(map);*/
 
 		//create variables to store a reference to svg and g elements
 
@@ -155,6 +160,9 @@
 						tooltip.style("visibility", "visible");
 						tooltip_title.text(d.properties.name);
 						tooltip_price.text("Price: " + d.properties.price);
+						//tooltip_lat.text("Latitude: " + "&d.coords.latitude");
+						//tooltip_lng.text("Longitude: " + "&d.coords.longitude"));
+						
 					})
 					.on("mousemove", function(){
 						tooltip.style("top", (d3.event.pageY-10)+"px")
