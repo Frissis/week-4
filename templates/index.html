@@ -160,8 +160,8 @@
 						tooltip.style("visibility", "visible");
 						tooltip_title.text(d.properties.name);
 						tooltip_price.text("Price: " + d.properties.price);
-						//tooltip_lat.text("Latitude: " + "&d.coords.latitude");
-						//tooltip_lng.text("Longitude: " + "&d.coords.longitude"));
+						tooltip_lat.text("Latitude: " + d.geometry.coordinates[0]);
+						tooltip_lng.text("Longitude: " + d.geometry.coordinates[1]);
 						
 					})
 					.on("mousemove", function(){
